@@ -9,6 +9,8 @@ import World from './World/World.js'
 import Resources from './Utils/Resources.js'
 import sources from './sources.js'
 import Sounds from './World/Sounds.js'
+import Raycaster from './Utils/Raycaster.js'
+
 
 let instance = null
 
@@ -68,6 +70,7 @@ export default class Experience {
         this.camera = new Camera(this)
         this.renderer = new Renderer(this)
         this.world = new World(this)
+        //this.raycaster = new Raycaster(this); //Para establecer coordenadas
 
         // Resize event
         this.sizes.on('resize', () => {
