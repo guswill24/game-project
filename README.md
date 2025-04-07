@@ -107,3 +107,6 @@ npm run dev
 Este proyecto es de uso académico y formativo para estudiantes y desarrolladores que deseen aprender sobre entornos 3D aplicados a React y OOP.
 
 ---
+## 🧑 Autor
+- Gustavo Willyn Sánchez Rodríguez
+- email: guswillsan@gmail.com
