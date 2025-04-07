@@ -39,29 +39,6 @@ export default class Raycaster {
         cube.position.copy(position);
         cube.position.y += 0.25;
         this.scene.add(cube);
-    
-/**
- * Inicio de la parte de la conexión con el backend
- */
-        fetch('http://localhost:3001/blocks', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                x: position.x,
-                y: position.y + 0.25, // ajustamos al valor real
-                z: position.z
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log('📝 Bloque guardado en backend:', data);
-        })
-        .catch(err => console.error('❌ Error al guardar bloque:', err));
     }
-/**
- * Fin de la parte de la conexión con el backend
- *  */    
     
 }
