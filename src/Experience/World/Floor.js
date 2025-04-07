@@ -1,15 +1,18 @@
 import * as THREE from 'three'
+import * as CANNON from 'cannon-es'
 
 export default class Floor {
     constructor(experience) {
         this.experience = experience
         this.scene = this.experience.scene
         this.resources = this.experience.resources
+        this.physics = this.experience.physics
 
         this.setGeometry()
         this.setTextures()
         this.setMaterial()
         this.setMesh()
+        this.setPhysics()
     }
 
     setGeometry() {
@@ -43,5 +46,15 @@ export default class Floor {
         this.mesh.rotation.x = -Math.PI * 0.5
         this.mesh.receiveShadow = true
         this.scene.add(this.mesh)
+    }
+
+    setPhysics() {
+        const shape = new CANNON.Plane()
+        this.body = new CANNON.Body({
+            mass: 0,
+            shape: shape
+        })
+        this.body.quaternion.setFromEuler(-Math.PI / 2, 0, 0)
+        this.physics.world.addBody(this.body)
     }
 }

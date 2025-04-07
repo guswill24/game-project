@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "cannon-es": "^0.20.0",
     "howler": "^2.2.4",
     "lil-gui": "^0.20.0",
     "react": "^19.0.0",

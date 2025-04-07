@@ -10,6 +10,8 @@ import Resources from './Utils/Resources.js'
 import sources from './sources.js'
 import Sounds from './World/Sounds.js'
 import Raycaster from './Utils/Raycaster.js'
+import KeyboardControls from './Utils/KeyboardControls.js'
+import Physics from './Utils/Physics.js'
 
 
 let instance = null
@@ -32,6 +34,8 @@ export default class Experience {
         this.sizes = new Sizes()
         this.time = new Time()
         this.scene = new THREE.Scene()
+        this.physics = new Physics()
+        this.keyboard = new KeyboardControls()
         //Creando niebla
         this.scene.fog = new THREE.Fog('#fdeac7', 10, 50);
         
@@ -70,7 +74,10 @@ export default class Experience {
         this.camera = new Camera(this)
         this.renderer = new Renderer(this)
         this.world = new World(this)
-        //this.raycaster = new Raycaster(this); //Para establecer coordenadas
+        /**
+         * La siguiente linea envia datos a mongoDB
+         */
+        this.raycaster = new Raycaster(this); //Para establecer coordenadas
 
         // Resize event
         this.sizes.on('resize', () => {
@@ -97,6 +104,7 @@ export default class Experience {
         this.camera.update()
         this.world.update()
         this.renderer.update()
+        this.physics.update(this.time.delta * 0.001)
     }
 
     destroy() {
