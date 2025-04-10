@@ -3,6 +3,7 @@ import Floor from './Floor.js'
 import Fox from './Fox.js'
 import Robot from './Robot.js'
 import BlockPrefab from './BlockPrefab.js'
+import ToyCarLoader from './ToyCarLoader.js' // Importa la clase ToyCarLoader
 
 
 export default class World {
@@ -13,33 +14,17 @@ export default class World {
         this.blocksLoaded = false // ⬅ bandera para saber si se cargaron
 
         // Wait for resources
-        this.resources.on('ready', () => {
+        this.resources.on('ready', async () => {
             // Setup
             this.floor = new Floor(this.experience)
             this.fox = new Fox(this.experience)
             this.robot = new Robot(this.experience)
             this.environment = new Environment(this.experience)
 
-            //Cargando prefab
-            this.prefab = new BlockPrefab(this.experience);
-
-            /**
-             * Esta parte del codigo se reemplazara por la informacion que 
-             * viene del backend.
-             */
-            const positions = [
-                { x: 3.97, y: 0.5, z: 1.93 },
-                { x: -0.25, y: 0.5, z: -2.79 },
-                { x: -3.47, y: 0.5, z: 2.50 },
-                { x: -3.95, y: 0.5, z: -2.59 },
-                { x: 2.07, y: 0.5, z: -4.06 },
-                { x: 4.67, y: 0.5, z: -0.14 },
-                { x: 1.57, y: 0.5, z: -0.47 }
-            ];
-
-            positions.forEach((pos) => {
-                this.prefab.getInstance(pos);
-            });
+ 
+            // Nueva clase para cargar dinámicamente desde base de datos
+            this.loader = new ToyCarLoader(this.experience);
+            await this.loader.loadFromAPI(); // Carga desde backend
 
         })
         //finalizando carga prefab
@@ -47,11 +32,8 @@ export default class World {
     }
 
     update() {
-        if (this.fox)
-            this.fox.update()
-        if (this.robot)
-            this.robot.update()
-        if (this.prefab)
-            this.prefab.update();
+        if (this.fox) this.fox.update();
+        if (this.robot) this.robot.update();
+        if (this.prefab) this.prefab.update();
     }
 }
